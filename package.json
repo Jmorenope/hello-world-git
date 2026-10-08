@@ -1,0 +1,29 @@
+{
+  "name": "elmackflay-video-template",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Plantilla base de Remotion para los videos de Elmackflay",
+  "scripts": {
+    "studio": "remotion studio",
+    "render:vertical": "remotion render ElmackflayVertical out/elmackflay-vertical.mp4",
+    "render:horizontal": "remotion render ElmackflayHorizontal out/elmackflay-horizontal.mp4",
+    "still:thumbnail": "remotion still ElmackflayThumbnail out/thumbnail.png",
+    "captions": "node scripts/whisper-to-captions.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/captions": "4.0.524",
+    "@remotion/cli": "4.0.524",
+    "@remotion/fonts": "4.0.524",
+    "@remotion/transitions": "4.0.524",
+    "@remotion/zod-types": "4.0.524",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.524",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.12",
+    "typescript": "5.6.3"
+  }
+}

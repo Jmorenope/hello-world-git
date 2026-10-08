@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Logo PROVISIONAL: reemplázalo por el logo oficial de Elmackflay -->
+  <circle cx="256" cy="256" r="240" fill="#7B2CFF"/>
+  <circle cx="256" cy="256" r="240" fill="none" stroke="#FFE600" stroke-width="20"/>
+  <text x="256" y="330" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="230" fill="#FFFFFF">EM</text>
+</svg>

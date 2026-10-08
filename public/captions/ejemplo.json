@@ -1,0 +1,135 @@
+[
+ {
+  "text": "Hola",
+  "startMs": 200,
+  "endMs": 560,
+  "timestampMs": 380,
+  "confidence": 1
+ },
+ {
+  "text": " a",
+  "startMs": 620,
+  "endMs": 905,
+  "timestampMs": 762,
+  "confidence": 1
+ },
+ {
+  "text": " todos",
+  "startMs": 965,
+  "endMs": 1350,
+  "timestampMs": 1157,
+  "confidence": 1
+ },
+ {
+  "text": " bienvenidos",
+  "startMs": 1410,
+  "endMs": 1945,
+  "timestampMs": 1677,
+  "confidence": 1
+ },
+ {
+  "text": " a",
+  "startMs": 2005,
+  "endMs": 2290,
+  "timestampMs": 2147,
+  "confidence": 1
+ },
+ {
+  "text": " un",
+  "startMs": 2350,
+  "endMs": 2660,
+  "timestampMs": 2505,
+  "confidence": 1
+ },
+ {
+  "text": " nuevo",
+  "startMs": 2720,
+  "endMs": 3105,
+  "timestampMs": 2912,
+  "confidence": 1
+ },
+ {
+  "text": " video",
+  "startMs": 3165,
+  "endMs": 3550,
+  "timestampMs": 3357,
+  "confidence": 1
+ },
+ {
+  "text": " de",
+  "startMs": 3610,
+  "endMs": 3920,
+  "timestampMs": 3765,
+  "confidence": 1
+ },
+ {
+  "text": " Elmackflay",
+  "startMs": 3980,
+  "endMs": 4490,
+  "timestampMs": 4235,
+  "confidence": 1
+ },
+ {
+  "text": " hoy",
+  "startMs": 4550,
+  "endMs": 4885,
+  "timestampMs": 4717,
+  "confidence": 1
+ },
+ {
+  "text": " les",
+  "startMs": 4945,
+  "endMs": 5280,
+  "timestampMs": 5112,
+  "confidence": 1
+ },
+ {
+  "text": " traigo",
+  "startMs": 5340,
+  "endMs": 5750,
+  "timestampMs": 5545,
+  "confidence": 1
+ },
+ {
+  "text": " algo",
+  "startMs": 5810,
+  "endMs": 6170,
+  "timestampMs": 5990,
+  "confidence": 1
+ },
+ {
+  "text": " increíble",
+  "startMs": 6230,
+  "endMs": 6715,
+  "timestampMs": 6472,
+  "confidence": 1
+ },
+ {
+  "text": " no",
+  "startMs": 6775,
+  "endMs": 7085,
+  "timestampMs": 6930,
+  "confidence": 1
+ },
+ {
+  "text": " se",
+  "startMs": 7145,
+  "endMs": 7455,
+  "timestampMs": 7300,
+  "confidence": 1
+ },
+ {
+  "text": " lo",
+  "startMs": 7515,
+  "endMs": 7825,
+  "timestampMs": 7670,
+  "confidence": 1
+ },
+ {
+  "text": " pierdan",
+  "startMs": 7885,
+  "endMs": 8320,
+  "timestampMs": 8102,
+  "confidence": 1
+ }
+]
