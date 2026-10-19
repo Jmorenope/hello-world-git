@@ -1,9 +1,9 @@
 import React from 'react';
 import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig, Easing} from 'remotion';
-import type {Scene} from '../schema';
+import type {Broll} from '../schema';
 
 /** Acercamientos de cámara virtuales sobre cualquier contenido. */
-export const ZoomLayer: React.FC<{zoom: Scene['zoom']; children: React.ReactNode}> = ({zoom, children}) => {
+export const ZoomLayer: React.FC<{zoom: Broll['zoom']; children: React.ReactNode}> = ({zoom, children}) => {
 	const frame = useCurrentFrame();
 	const {fps, durationInFrames} = useVideoConfig();
 	const progress = interpolate(frame, [0, durationInFrames], [0, 1], {

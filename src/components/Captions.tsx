@@ -6,14 +6,14 @@ import {brand} from '../brand';
 // Cuántos ms caben en una misma "página" de subtítulos. Más alto = más palabras por pantalla.
 const COMBINE_TOKENS_WITHIN_MS = 1200;
 
-const Page: React.FC<{page: TikTokPage}> = ({page}) => {
+const Page: React.FC<{page: TikTokPage; lift: number}> = ({page, lift}) => {
 	const frame = useCurrentFrame();
 	const {fps, width, height} = useVideoConfig();
 	const timeMs = page.startMs + (frame / fps) * 1000;
 	const pop = spring({frame, fps, config: {damping: 10, stiffness: 200}, durationInFrames: 8});
 
 	return (
-		<AbsoluteFill style={{justifyContent: 'flex-end', alignItems: 'center', paddingBottom: height > width ? '30%' : '8%'}}>
+		<AbsoluteFill style={{justifyContent: 'flex-end', alignItems: 'center', paddingBottom: height * ((height > width ? 0.26 : 0.08) + lift * 0.18), zIndex: 4}}>
 			<div
 				style={{
 					fontFamily: brand.fonts.title,
@@ -37,8 +37,8 @@ const Page: React.FC<{page: TikTokPage}> = ({page}) => {
 							style={{
 								color: active ? brand.colors.primary : brand.colors.light,
 								display: 'inline-block',
-								margin: '0 0.1em',
-								transform: active ? 'scale(1.12)' : 'none',
+								margin: '0 0.14em',
+								transform: active ? 'scale(1.06)' : 'none',
 							}}
 						>
 							{t.text.trim()}
@@ -51,7 +51,8 @@ const Page: React.FC<{page: TikTokPage}> = ({page}) => {
 };
 
 /** Subtítulos estilo TikTok/Reels con la palabra activa resaltada. */
-export const Captions: React.FC<{captions: Caption[]}> = ({captions}) => {
+/** lift: 0 → abajo; 1 → sube hacia la línea central (modo split). */
+export const Captions: React.FC<{captions: Caption[]; lift?: number}> = ({captions, lift = 0}) => {
 	const {fps} = useVideoConfig();
 	const pages = useMemo(
 		() => createTikTokStyleCaptions({captions, combineTokensWithinMilliseconds: COMBINE_TOKENS_WITHIN_MS}).pages,
@@ -59,7 +60,7 @@ export const Captions: React.FC<{captions: Caption[]}> = ({captions}) => {
 	);
 
 	return (
-		<AbsoluteFill>
+		<AbsoluteFill style={{zIndex: 4}}>
 			{pages.map((page, i) => {
 				const next = pages[i + 1];
 				const from = Math.round((page.startMs / 1000) * fps);
@@ -67,7 +68,7 @@ export const Captions: React.FC<{captions: Caption[]}> = ({captions}) => {
 				const duration = Math.max(1, Math.round((endMs / 1000) * fps) - from);
 				return (
 					<Sequence key={i} from={from} durationInFrames={duration} layout="none">
-						<Page page={page} />
+						<Page page={page} lift={lift} />
 					</Sequence>
 				);
 			})}

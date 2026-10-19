@@ -1,0 +1,31 @@
+{
+  "videoSrc": "media/reel1.mp4",
+  "trimStartSeconds": 0,
+  "captionsSrc": "captions/reel1.json",
+  "hook": "Nadie te enseña esto",
+  "autoZoom": true,
+  "autoZoomEverySeconds": 3,
+  "autoZoomScale": 1.15,
+  "zooms": [
+    {"atSeconds": 12.5, "durationSeconds": 1.5, "scale": 1.35}
+  ],
+  "broll": [
+    {"src": "media/pantalla-nmap.mp4", "atSeconds": 6, "durationSeconds": 4, "layout": "split", "transition": "glitch", "zoom": "zoom-in"},
+    {"src": "media/pantalla-wireshark.mp4", "atSeconds": 15, "durationSeconds": 5, "layout": "pip", "transition": "slide", "zoom": "none", "sourceStartSeconds": 2},
+    {"src": "media/captura.png", "atSeconds": 22, "durationSeconds": 2, "layout": "full", "transition": "zoom", "zoom": "punch-in"}
+  ],
+  "texts": [
+    {"text": "Paso 1", "atSeconds": 6, "durationSeconds": 2, "style": "label"},
+    {"text": "No hagas esto en redes ajenas", "atSeconds": 18, "durationSeconds": 2.5, "style": "headline"}
+  ],
+  "autoLogos": true,
+  "logos": [
+    {"topic": "Hack The Box", "atSeconds": 25}
+  ],
+  "musicSrc": "music/fondo.mp3",
+  "musicVolume": 0.25,
+  "musicDuckedVolume": 0.08,
+  "soundEffects": true,
+  "showProgressBar": true,
+  "ctaText": "Sígueme para más"
+}

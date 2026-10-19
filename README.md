@@ -1,116 +1,131 @@
-# Plantilla de video de Elmackflay (Remotion)
+# Reels de Elmackflay (Remotion)
 
-Plantilla para generar videos de Elmackflay con código: **motion graphics, transiciones, acercamientos de cámara, subtítulos animados, logo, música de fondo con ducking, intro y outro de marca**. Genera:
+Plantilla para editar los Reels de Elmackflay con código. Le das **tu video hablando a cámara** y se encarga de:
 
-| Composición            | Formato     | Uso                      |
-| ---------------------- | ----------- | ------------------------ |
-| `ElmackflayVertical`   | 1080 × 1920 | TikTok, Reels, Shorts    |
-| `ElmackflayHorizontal` | 1920 × 1080 | YouTube                  |
-| `ElmackflayThumbnail`  | 1280 × 720  | Miniatura de YouTube     |
+- **Subtítulos automáticos** palabra por palabra, con la palabra activa en verde neón.
+- **Logos automáticos**: cuando dices "Kali Linux", "Nmap", "Wireshark"… aparece su logo en pantalla, con un "pop".
+- **Zoom de cámara** automático cada pocos segundos (alterna cerca y lejos), más acercamientos extra donde quieras remarcar algo.
+- **Pantallas de tus herramientas** (grabaciones de pantalla o capturas) con transiciones **glitch**, slide, zoom, wipe o flash, en 3 formatos:
+  - `split`: la pantalla arriba y tu cara abajo
+  - `pip`: la pantalla completa y tu cara en un círculo
+  - `full`: la pantalla tapa todo
+- **Textos animados**, una frase gancho al inicio y "Sígueme para más" al final.
+- **Música de fondo** que baja sola cuando hablas, efectos de sonido y barra de progreso.
+- **Portada** del reel con el logo del tema.
 
-## Requisitos
+Formato: 1080 × 1920, 30 fps. Sirve para Instagram Reels, TikTok y YouTube Shorts.
 
-- Node.js 18 o más reciente
-- (Opcional) [Whisper](https://github.com/openai/whisper) para generar subtítulos automáticos
+## Instalación (una sola vez)
 
-## Inicio rápido
+Necesitas [Node.js](https://nodejs.org) 18 o más reciente y [FFmpeg](https://ffmpeg.org/download.html).
 
 ```bash
 npm install
-npm run studio            # editor visual en el navegador, con vista previa en vivo
-npm run render:vertical   # → out/elmackflay-vertical.mp4
-npm run render:horizontal # → out/elmackflay-horizontal.mp4
-npm run still:thumbnail   # → out/thumbnail.png
+npm run studio        # abre el editor con un reel de demostración
 ```
 
-En el **Studio** puedes cambiar textos, escenas, zooms y transiciones desde el panel derecho y verlo al instante.
+## Hacer un reel paso a paso
 
-## 1. Pon la identidad de Elmackflay (una sola vez)
+**1. Copia tu video** a `public/media/`, por ejemplo `public/media/reel1.mp4`. Pon también ahí tus grabaciones de pantalla.
 
-Todo el estilo vive en **`src/brand.ts`**:
-
-- `colors`: primario (palabra activa en subtítulos), secundario, acento, oscuro y claro.
-- `fonts`: fuente de títulos y de textos. Vienen incluidas Anton y Montserrat en `public/fonts/`; para usar otras, pon tus archivos `.woff2` o `.ttf` ahí y cambia las rutas.
-- `logo`: reemplaza `public/brand/logo.svg` por el logo oficial (PNG o SVG con fondo transparente).
-- `handle`: el usuario que aparece en la marca de agua y el outro.
-- `motion`: duración de la intro, el outro y las transiciones.
-
-> ⚠️ Los colores, las fuentes y el logo actuales son **provisionales**. Reemplázalos por los oficiales.
-
-## 2. Arma un video
-
-1. Copia tus archivos a `public/`:
-   - clips e imágenes → `public/media/`
-   - música → `public/music/`
-   - voz en off → `public/media/`
-2. Duplica `videos/ejemplo.json` y edítalo.
-3. Renderízalo:
+**2. Genera los subtítulos.** La primera vez descarga el transcriptor (unos 500 MB, solo una vez):
 
 ```bash
-npx remotion render ElmackflayVertical out/mi-video.mp4 --props=videos/mi-video.json
+npm run transcribe -- public/media/reel1.mp4 reel1
 ```
 
-### Opciones de cada escena
+Esto crea `public/captions/reel1.json`. Ábrelo y corrige cualquier palabra mal escrita. El transcriptor ya conoce los nombres de todas las herramientas de `src/topics.json`, así que suele escribirlos bien.
 
-| Campo              | Valores                                                               |
-| ------------------ | --------------------------------------------------------------------- |
-| `type`             | `video`, `image` o `color` (fondo animado de marca, sin archivo)      |
-| `src`              | Ruta dentro de `public/`, p. ej. `media/clip1.mp4`                    |
-| `durationInFrames` | Duración a 30 fps (30 = 1 s, 90 = 3 s)                                |
-| `zoom`             | `none`, `zoom-in`, `zoom-out`, `punch-in`, `pan-left`, `pan-right`    |
-| `transition`       | Entrada a la escena: `fade`, `slide`, `wipe`, `flip`, `clock-wipe`, `none` |
-| `headline`         | Título grande animado palabra por palabra (primeros 3 s)              |
-| `lowerThird`       | Banda inferior con nombre o dato                                      |
-| `startFromSeconds` | En videos: segundo desde el que empieza el clip                       |
-| `muted`            | `false` para conservar el audio original del clip                     |
+**3. Describe el reel.** Copia `videos/reel-ejemplo.json` a `videos/reel1.json` y edítalo: el video, las pantallas, los textos y la música. Todos los tiempos van en **segundos**.
 
-### Opciones generales
+**4. Revísalo en el editor** (opcional): ejecuta `npm run studio`, elige `ElmackflayReel` y pega los valores en el panel derecho.
 
-- `title` y `subtitle`: textos de la intro.
-- `voiceSrc`: voz en off. Empieza justo después de la intro, igual que los subtítulos.
-- `musicSrc`, `musicVolume` y `musicDuckedVolume`: música de fondo. Se repite en bucle, entra y sale con fundido, y **baja automáticamente cuando hay voz**.
-- `captionsSrc`: subtítulos (ver abajo).
-- `showWatermark`: logo y usuario en la esquina.
-- `ctaText`: el botón del outro.
-
-## 3. Subtítulos automáticos
+**5. Renderízalo:**
 
 ```bash
-# 1. Transcribe la voz con tiempos por palabra
-whisper public/media/voz.mp3 --language Spanish --word_timestamps True --output_format json
-
-# 2. Conviértelo al formato de la plantilla
-npm run captions -- voz.json mi-video   # → public/captions/mi-video.json
+npm run render -- out/reel1.mp4 --props=videos/reel1.json
 ```
 
-Luego pon `"captionsSrc": "captions/mi-video.json"` en tu video. También acepta archivos `.srt` exportados de CapCut, Premiere o YouTube:
+**6. Portada** (opcional):
 
 ```bash
-npm run captions -- subtitulos.srt mi-video
+npm run portada -- out/portada1.png --props='{"line1":"Escanea tu red","line2":"con Kali Linux","topic":"Kali Linux","imageSrc":""}'
 ```
 
-Los subtítulos aparecen al estilo TikTok: palabra por palabra, con la palabra activa resaltada en el color primario.
+## Opciones del reel
+
+| Campo | Qué hace |
+| --- | --- |
+| `videoSrc` | Tu video a cámara, dentro de `public/` |
+| `trimStartSeconds` | Corta los primeros segundos del video |
+| `durationSeconds` | Duración del reel. `0` = todo el video |
+| `captionsSrc` | Subtítulos creados con `npm run transcribe` |
+| `hook` | Frase gancho de los primeros 2,5 s. Vacío = sin gancho |
+| `autoZoom`, `autoZoomEverySeconds`, `autoZoomScale` | Zoom automático de cámara |
+| `zooms` | Acercamientos extra: `atSeconds`, `durationSeconds`, `scale` |
+| `broll` | Pantallas: `src`, `atSeconds`, `durationSeconds`, `layout` (`split`/`pip`/`full`), `transition` (`glitch`/`slide`/`zoom`/`wipe`/`flash`), `zoom`, `sourceStartSeconds` |
+| `texts` | Textos: `text`, `atSeconds`, `durationSeconds`, `style` (`headline` grande, `label` etiqueta) |
+| `autoLogos` | Mostrar logos al mencionar herramientas |
+| `logos` | Logos puestos a mano: `topic`, `atSeconds` |
+| `musicSrc`, `musicVolume`, `musicDuckedVolume` | Música de fondo y su volumen mientras hablas |
+| `soundEffects` | "Whoosh" en las pantallas y "pop" en los logos |
+| `showProgressBar` | Barra de progreso arriba |
+| `ctaText` | Llamada a la acción en los últimos 2,5 s. Vacío = sin cierre |
+
+## Logos de herramientas
+
+Están en **`src/topics.json`**. Cada tema tiene:
+
+- `name`: el nombre que se muestra y que se escribe bien en los subtítulos.
+- `aliases`: cómo se puede decir, en minúsculas y sin tildes. Se toleran pequeños errores de transcripción ("cali linux" → Kali Linux).
+- `icon`: el logo de [simpleicons.org](https://simpleicons.org). Usa el nombre que aparece en la URL del ícono, por ejemplo `kalilinux`.
+- `image` (opcional): un logo propio dentro de `public/`, por ejemplo `logos/nmap.png`. Tiene prioridad sobre `icon`.
+
+Si un tema no tiene ni `icon` ni `image`, se muestra una tarjeta estilo terminal `>_` con el nombre. Eso pasa hoy con **Nmap, Windows, John the Ripper, Aircrack-ng y Flipper Zero**, porque Simple Icons no los incluye. Para usar su logo real, pon el PNG en `public/logos/` y agrega `"image": "logos/nmap.png"`.
+
+Para agregar una herramienta nueva, añade una línea, por ejemplo:
+
+```json
+{"name": "Hydra", "image": "logos/hydra.png", "aliases": ["hydra"]}
+```
+
+> Los logos pertenecen a sus dueños. Aquí se usan para identificar la herramienta de la que se habla.
+
+## Estilo visual
+
+Todo está en **`src/brand.ts`**: colores (verde neón, cian y magenta sobre fondo oscuro), fuentes (Anton para subtítulos y titulares, JetBrains Mono para las etiquetas estilo terminal), el usuario del cierre (`@elmackflay`) y la velocidad de las transiciones. `faceFocus` indica qué punto del video queda centrado al hacer zoom; por defecto es la zona de la cara.
+
+## Subtítulos de otras apps
+
+Si ya tienes un `.srt` (de CapCut, Premiere, YouTube…):
+
+```bash
+npm run captions -- subtitulos.srt reel1
+```
 
 ## Estructura
 
 ```
 src/
-  brand.ts              ← identidad visual (editar aquí)
-  schema.ts             ← opciones disponibles para cada video
-  sample-video.ts       ← video de ejemplo del Studio
-  ElmackflayVideo.tsx   ← línea de tiempo: intro → escenas → outro + audio + subtítulos
-  Thumbnail.tsx         ← miniatura
-  components/
-    Intro.tsx, Outro.tsx, SceneView.tsx, ZoomLayer.tsx,
-    Headline.tsx, LowerThird.tsx, Captions.tsx, Watermark.tsx, BrandBackground.tsx
+  brand.ts          ← colores, fuentes, usuario
+  topics.json       ← herramientas y sus logos
+  topics.ts         ← detección de temas en la voz
+  schema.ts         ← opciones del reel
+  Reel.tsx          ← arma todo el reel
+  Cover.tsx         ← portada
+  demo-reel.ts      ← reel de demostración del editor
+  components/       ← MainVideo, BRoll, LogoPopup, Captions, Headline, LowerThird, EndCta, ProgressBar…
 public/
-  brand/  fonts/  media/  music/  captions/
-videos/ejemplo.json     ← plantilla de video para --props
-scripts/whisper-to-captions.mjs
+  media/ music/     ← tus archivos
+  captions/         ← subtítulos generados
+  sfx/              ← whoosh y pop
+  fonts/ demo/
+scripts/
+  transcribe.mjs          ← video → subtítulos (whisper.cpp)
+  whisper-to-captions.mjs ← .srt o JSON de Whisper → subtítulos
+videos/reel-ejemplo.json
 ```
 
-## Música sin problemas de derechos
-
-YouTube Audio Library (gratis), Epidemic Sound, Artlist, o música generada con IA (Suno, ElevenLabs Music). Usa solo música que tengas derecho a publicar.
+El reel de demostración (`public/demo/`) usa una cámara de prueba, una voz sintética y una terminal falsa, solo para ver los efectos.
 
 > Licencia: Remotion es gratis para personas y empresas pequeñas; las empresas más grandes necesitan una licencia de empresa. Revisa https://www.remotion.dev/license

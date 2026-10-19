@@ -5,7 +5,7 @@ import {brand} from '../brand';
 /** Título grande con entrada palabra por palabra y fondo de marca. */
 export const Headline: React.FC<{text: string; position?: 'center' | 'top'}> = ({text, position = 'center'}) => {
 	const frame = useCurrentFrame();
-	const {fps, width, durationInFrames} = useVideoConfig();
+	const {fps, width, height, durationInFrames} = useVideoConfig();
 	const words = text.split(' ');
 	const fontSize = Math.round(width * 0.11);
 	const exit = interpolate(frame, [durationInFrames - 8, durationInFrames], [1, 0], {
@@ -18,7 +18,7 @@ export const Headline: React.FC<{text: string; position?: 'center' | 'top'}> = (
 			style={{
 				justifyContent: position === 'center' ? 'center' : 'flex-start',
 				alignItems: 'center',
-				paddingTop: position === 'top' ? '12%' : 0,
+				paddingTop: position === 'top' ? height * 0.1 : 0,
 				opacity: exit,
 			}}
 		>

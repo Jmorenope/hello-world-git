@@ -1,60 +1,62 @@
 import React from 'react';
 import {CalculateMetadataFunction, Composition, Still, staticFile} from 'remotion';
 import type {Caption} from '@remotion/captions';
-import {ElmackflayVideo, type ElmackflayVideoProps} from './ElmackflayVideo';
-import {videoSchema} from './schema';
-import {getTimeline} from './timeline';
-import {Thumbnail, thumbnailSchema} from './Thumbnail';
-import {sampleVideo} from './sample-video';
+import {parseMedia} from '@remotion/media-parser';
+import {Reel, type ElmackflayReelProps} from './Reel';
+import {reelSchema} from './schema';
+import {Cover, coverSchema} from './Cover';
+import {demoReel} from './demo-reel';
 
 const FPS = 30;
 
-// Calcula la duración según las escenas y carga el JSON de subtítulos.
-const calculateMetadata: CalculateMetadataFunction<ElmackflayVideoProps> = async ({props}) => {
-	let loadedCaptions: Caption[] = [];
+// Calcula la duración a partir del video y carga los subtítulos.
+const calculateMetadata: CalculateMetadataFunction<ElmackflayReelProps> = async ({props}) => {
+	let captions: Caption[] = [];
 	if (props.captionsSrc) {
 		const res = await fetch(staticFile(props.captionsSrc));
-		loadedCaptions = (await res.json()) as Caption[];
+		const trimMs = props.trimStartSeconds * 1000;
+		// Los subtítulos son del video completo: se corren para que coincidan con el recorte.
+		captions = ((await res.json()) as Caption[])
+			.filter((c) => c.endMs > trimMs)
+			.map((c) => ({...c, startMs: Math.max(0, c.startMs - trimMs), endMs: c.endMs - trimMs, timestampMs: c.timestampMs === null ? null : c.timestampMs - trimMs}));
 	}
+
+	let seconds = props.durationSeconds;
+	if (!seconds && props.videoSrc) {
+		const {durationInSeconds} = await parseMedia({src: staticFile(props.videoSrc), fields: {durationInSeconds: true}});
+		seconds = (durationInSeconds ?? 10) - props.trimStartSeconds;
+	}
+	if (!seconds) {
+		seconds = captions.length ? captions[captions.length - 1].endMs / 1000 + 1 : 10;
+	}
+
 	return {
-		durationInFrames: getTimeline(props.scenes).durationInFrames,
-		props: {...props, loadedCaptions},
+		durationInFrames: Math.max(1, Math.floor(seconds * FPS)),
+		props: {...props, loadedCaptions: captions},
 	};
 };
 
 export const RemotionRoot: React.FC = () => (
 	<>
-		{/* TikTok, Reels, Shorts */}
+		{/* Reels de Instagram (también sirve para TikTok y Shorts) */}
 		<Composition
-			id="ElmackflayVertical"
-			component={ElmackflayVideo}
-			schema={videoSchema}
-			defaultProps={sampleVideo}
+			id="ElmackflayReel"
+			component={Reel}
+			schema={reelSchema}
+			defaultProps={demoReel}
 			calculateMetadata={calculateMetadata}
 			fps={FPS}
 			width={1080}
 			height={1920}
 			durationInFrames={1}
 		/>
-		{/* YouTube */}
-		<Composition
-			id="ElmackflayHorizontal"
-			component={ElmackflayVideo}
-			schema={videoSchema}
-			defaultProps={sampleVideo}
-			calculateMetadata={calculateMetadata}
-			fps={FPS}
-			width={1920}
-			height={1080}
-			durationInFrames={1}
-		/>
 		<Still
-			id="ElmackflayThumbnail"
-			component={Thumbnail}
-			schema={thumbnailSchema}
-			defaultProps={{line1: 'Esto no', line2: 'te lo esperas', imageSrc: ''}}
-			width={1280}
-			height={720}
+			id="ElmackflayPortada"
+			component={Cover}
+			schema={coverSchema}
+			defaultProps={{line1: 'Escanea tu red', line2: 'con Kali Linux', imageSrc: '', topic: 'Kali Linux'}}
+			width={1080}
+			height={1920}
 		/>
 	</>
 );

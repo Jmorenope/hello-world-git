@@ -1,0 +1,226 @@
+[
+ {
+  "text": "Hola,",
+  "startMs": 100,
+  "endMs": 800,
+  "timestampMs": 340,
+  "confidence": 0.845137
+ },
+ {
+  "text": " soy",
+  "startMs": 800,
+  "endMs": 920,
+  "timestampMs": 1120,
+  "confidence": 0.910799
+ },
+ {
+  "text": " Elmackflay.",
+  "startMs": 920,
+  "endMs": 2290,
+  "timestampMs": 1300,
+  "confidence": 0.490598
+ },
+ {
+  "text": " Hoy",
+  "startMs": 2290,
+  "endMs": 2560,
+  "timestampMs": 2460,
+  "confidence": 0.950126
+ },
+ {
+  "text": " te",
+  "startMs": 2560,
+  "endMs": 2700,
+  "timestampMs": 2620,
+  "confidence": 0.985011
+ },
+ {
+  "text": " voy",
+  "startMs": 2700,
+  "endMs": 2990,
+  "timestampMs": 2800,
+  "confidence": 0.996118
+ },
+ {
+  "text": " a",
+  "startMs": 2990,
+  "endMs": 3150,
+  "timestampMs": 2920,
+  "confidence": 0.997516
+ },
+ {
+  "text": " enseñar",
+  "startMs": 3150,
+  "endMs": 3850,
+  "timestampMs": 3360,
+  "confidence": 0.997468
+ },
+ {
+  "text": " a",
+  "startMs": 3850,
+  "endMs": 3940,
+  "timestampMs": 3600,
+  "confidence": 0.996514
+ },
+ {
+  "text": " escanear",
+  "startMs": 3940,
+  "endMs": 4820,
+  "timestampMs": 3840,
+  "confidence": 0.929759
+ },
+ {
+  "text": " tu",
+  "startMs": 4820,
+  "endMs": 4900,
+  "timestampMs": 4340,
+  "confidence": 0.982364
+ },
+ {
+  "text": " red",
+  "startMs": 4900,
+  "endMs": 5190,
+  "timestampMs": 4660,
+  "confidence": 0.814076
+ },
+ {
+  "text": " con",
+  "startMs": 5190,
+  "endMs": 5480,
+  "timestampMs": 4960,
+  "confidence": 0.997322
+ },
+ {
+  "text": " Kali",
+  "startMs": 5480,
+  "endMs": 5860,
+  "timestampMs": 5280,
+  "confidence": 0.973157
+ },
+ {
+  "text": " Linux.",
+  "startMs": 5860,
+  "endMs": 6770,
+  "timestampMs": 5800,
+  "confidence": 0.981725
+ },
+ {
+  "text": " Primero",
+  "startMs": 6770,
+  "endMs": 7270,
+  "timestampMs": 6960,
+  "confidence": 0.723388
+ },
+ {
+  "text": " abrimos",
+  "startMs": 7270,
+  "endMs": 7880,
+  "timestampMs": 7480,
+  "confidence": 0.85337
+ },
+ {
+  "text": " Nmap.",
+  "startMs": 7880,
+  "endMs": 8510,
+  "timestampMs": 8220,
+  "confidence": 0.121291
+ },
+ {
+  "text": " Después",
+  "startMs": 8510,
+  "endMs": 9370,
+  "timestampMs": 9420,
+  "confidence": 0.977293
+ },
+ {
+  "text": " capturamos",
+  "startMs": 9370,
+  "endMs": 10140,
+  "timestampMs": 9880,
+  "confidence": 0.994385
+ },
+ {
+  "text": " el",
+  "startMs": 10140,
+  "endMs": 10320,
+  "timestampMs": 10500,
+  "confidence": 0.998982
+ },
+ {
+  "text": " tráfico",
+  "startMs": 10320,
+  "endMs": 11040,
+  "timestampMs": 10720,
+  "confidence": 0.907679
+ },
+ {
+  "text": " con",
+  "startMs": 11040,
+  "endMs": 11310,
+  "timestampMs": 11360,
+  "confidence": 0.994583
+ },
+ {
+  "text": " Wireshark.",
+  "startMs": 11310,
+  "endMs": 12570,
+  "timestampMs": 11620,
+  "confidence": 0.968522
+ },
+ {
+  "text": " Y",
+  "startMs": 12570,
+  "endMs": 12570,
+  "timestampMs": 12660,
+  "confidence": 0.898472
+ },
+ {
+  "text": " al",
+  "startMs": 12570,
+  "endMs": 12750,
+  "timestampMs": 12780,
+  "confidence": 0.979148
+ },
+ {
+  "text": " final",
+  "startMs": 12750,
+  "endMs": 13200,
+  "timestampMs": 13180,
+  "confidence": 0.995807
+ },
+ {
+  "text": " probamos",
+  "startMs": 13200,
+  "endMs": 13930,
+  "timestampMs": 13540,
+  "confidence": 0.640203
+ },
+ {
+  "text": " Metasploit.",
+  "startMs": 13930,
+  "endMs": 15120,
+  "timestampMs": 14180,
+  "confidence": 0.968843
+ },
+ {
+  "text": " Sígueme",
+  "startMs": 15120,
+  "endMs": 15680,
+  "timestampMs": 15500,
+  "confidence": 0.523777
+ },
+ {
+  "text": " para",
+  "startMs": 15680,
+  "endMs": 15960,
+  "timestampMs": 16100,
+  "confidence": 0.972265
+ },
+ {
+  "text": " más.",
+  "startMs": 15960,
+  "endMs": 16480,
+  "timestampMs": 16460,
+  "confidence": 0.9402
+ }
+]
