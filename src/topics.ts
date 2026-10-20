@@ -58,12 +58,22 @@ const levenshtein = (a: string, b: string) => {
 // Tolera errores típicos de la transcripción ("Calilinux", "Metasploid") en nombres largos.
 const sounds = (heard: string, target: string) => {
 	if (heard === target) return true;
-	if (target.length < 6) return false;
+	if (target.length < 6 || Math.abs(heard.length - target.length) > 1) return false;
 	return levenshtein(heard, target) <= (target.length >= 9 ? 2 : 1);
 };
 
+const squash = (s: string) => normalize(s).replace(/ /g, '');
+
 const aliases = topics
-	.flatMap((topic) => topic.aliases.map((a) => ({topic, squashed: normalize(a).replace(/ /g, '')})))
+	.flatMap((topic) =>
+		topic.aliases.map((a) => ({
+			topic,
+			squashed: squash(a),
+			words: normalize(a).split(' ').length,
+			// ¿Es el nombre completo? Solo entonces se reescribe en los subtítulos ("Kalilinux" → "Kali Linux").
+			isFullName: squash(a) === squash(topic.name),
+		})),
+	)
 	.sort((a, b) => b.squashed.length - a.squashed.length);
 
 /**
@@ -73,14 +83,18 @@ const aliases = topics
  */
 export const detectTopics = (captions: Caption[]): {hits: TopicHit[]; captions: Caption[]} => {
 	const words = captions.map((c) => normalize(c.text));
-	const found: {topic: Topic; index: number; count: number}[] = [];
+	const found: {topic: Topic; index: number; count: number; rename: boolean}[] = [];
 
 	for (let i = 0; i < words.length; ) {
 		let match: (typeof found)[number] | null = null;
 		for (const alias of aliases) {
 			for (let n = 1; n <= 3 && i + n <= words.length; n++) {
-				if (sounds(words.slice(i, i + n).join(''), alias.squashed)) {
-					match = {topic: alias.topic, index: i, count: n};
+				const heard = words.slice(i, i + n).join('');
+				// Con errores de transcripción solo se aceptan tantas palabras como tiene el nombre,
+				// para no "comerse" palabras vecinas ("de Kali Linux").
+				const exact = heard === alias.squashed;
+				if (exact || (n <= alias.words && sounds(heard, alias.squashed))) {
+					match = {topic: alias.topic, index: i, count: n, rename: alias.isFullName || !exact};
 					break;
 				}
 			}
@@ -99,7 +113,7 @@ export const detectTopics = (captions: Caption[]): {hits: TopicHit[]; captions: 
 	let f = 0;
 	for (let i = 0; i < captions.length; i++) {
 		const m = found[f];
-		if (m && m.index === i) {
+		if (m && m.index === i && m.rename) {
 			const first = captions[i];
 			const last = captions[i + m.count - 1];
 			const lead = first.text.match(/^\s*/)?.[0] ?? '';
@@ -108,6 +122,7 @@ export const detectTopics = (captions: Caption[]): {hits: TopicHit[]; captions: 
 			i += m.count - 1;
 			f++;
 		} else {
+			if (m && m.index === i) f++;
 			corrected.push(captions[i]);
 		}
 	}

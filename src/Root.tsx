@@ -10,7 +10,9 @@ import {demoReel} from './demo-reel';
 const FPS = 30;
 
 // Calcula la duración a partir del video y carga los subtítulos.
-const calculateMetadata: CalculateMetadataFunction<ElmackflayReelProps> = async ({props}) => {
+const calculateMetadata: CalculateMetadataFunction<ElmackflayReelProps> = async ({props: input}) => {
+	// Completa con los valores por defecto lo que el JSON del reel no indique.
+	const props = reelSchema.parse(input);
 	let captions: Caption[] = [];
 	if (props.captionsSrc) {
 		const res = await fetch(staticFile(props.captionsSrc));

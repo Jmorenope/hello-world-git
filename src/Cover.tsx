@@ -19,17 +19,18 @@ export const coverSchema = z.object({
  * por eso todo lo importante va en el centro.
  */
 export const Cover: React.FC<z.infer<typeof coverSchema>> = ({line1, line2, imageSrc, topic}) => {
-	const {width} = useVideoConfig();
+	const {width, height} = useVideoConfig();
 	const t = topic ? findTopic(topic) : undefined;
 	const icon = getIcon(t?.icon);
-	const logo = width * 0.26;
+	const logo = width * (imageSrc ? 0.22 : 0.26);
 	return (
 		<AbsoluteFill>
 			{imageSrc ? <Img src={staticFile(imageSrc)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /> : <BrandBackground />}
-			<AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(7,9,13,0) 30%, rgba(7,9,13,0.85) 75%)'}} />
-			<AbsoluteFill style={{justifyContent: 'center', alignItems: 'center', gap: width * 0.03, paddingTop: '20%'}}>
+			<AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(7,9,13,0) 45%, rgba(7,9,13,0.9) 80%)'}} />
+			{/* Con foto, el texto va abajo para no tapar la cara (dentro del recorte 4:5 del perfil). */}
+			<AbsoluteFill style={{justifyContent: imageSrc ? 'flex-end' : 'center', alignItems: 'center', gap: width * 0.03, paddingTop: imageSrc ? 0 : height * 0.1, paddingBottom: imageSrc ? height * 0.16 : 0}}>
 				{t ? (
-					<div style={{width: logo, height: logo, borderRadius: logo * 0.22, background: brand.colors.light, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 0 0 ${width * 0.008}px ${icon ? `#${icon.hex}` : brand.colors.primary}, 0 0 ${width * 0.08}px ${brand.colors.primary}`, transform: 'rotate(-6deg)'}}>
+					<div style={{...(imageSrc ? {position: 'absolute', top: height * 0.15, right: width * 0.08} : {}), width: logo, height: logo, borderRadius: logo * 0.22, background: brand.colors.light, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 0 0 ${width * 0.008}px ${icon ? `#${icon.hex}` : brand.colors.primary}, 0 0 ${width * 0.08}px ${brand.colors.primary}`, transform: 'rotate(-6deg)'}}>
 						{t.image ? <Img src={staticFile(t.image)} style={{width: '72%'}} /> : icon ? <svg viewBox="0 0 24 24" style={{width: '62%'}}><path d={icon.path} fill={`#${icon.hex}`} /></svg> : <span style={{fontFamily: brand.fonts.mono, fontWeight: 800, fontSize: logo * 0.34}}>{'>_'}</span>}
 					</div>
 				) : null}
