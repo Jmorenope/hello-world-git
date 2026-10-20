@@ -2,3 +2,9 @@ node_modules
 out
 .DS_Store
 .whisper
+# Material personal de cada reel (videos, música y transcripciones): no se sube al repositorio
+public/media/*
+!public/media/.gitkeep
+public/music/*
+!public/music/.gitkeep
+public/captions/
