@@ -13,6 +13,12 @@ export const brollSchema = z.object({
 	zoom: z.enum(['none', 'zoom-in', 'zoom-out', 'punch-in', 'pan-left', 'pan-right']).default('zoom-in'),
 	// Para videos: segundo del clip desde el que empieza.
 	sourceStartSeconds: z.number().min(0).default(0),
+	// Velocidad: 1 = normal, 4 = cuatro veces más rápido (muestra una etiqueta "×4").
+	playbackRate: z.number().min(0.25).max(32).default(1),
+	// Qué parte de la grabación queda a la vista ("x% y%"): "0% 0%" = arriba a la izquierda.
+	focus: z.string().default('50% 50%'),
+	// Ampliación extra hacia el punto de focus (1 = sin ampliar). Útil para que se lea la terminal.
+	scale: z.number().min(1).max(4).default(1),
 });
 
 export const textSchema = z.object({

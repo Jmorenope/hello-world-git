@@ -3,7 +3,7 @@ import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig, Easi
 import type {Broll} from '../schema';
 
 /** Acercamientos de cámara virtuales sobre cualquier contenido. */
-export const ZoomLayer: React.FC<{zoom: Broll['zoom']; children: React.ReactNode}> = ({zoom, children}) => {
+export const ZoomLayer: React.FC<{zoom: Broll['zoom']; origin?: string; children: React.ReactNode}> = ({zoom, origin = 'center center', children}) => {
 	const frame = useCurrentFrame();
 	const {fps, durationInFrames} = useVideoConfig();
 	const progress = interpolate(frame, [0, durationInFrames], [0, 1], {
@@ -33,5 +33,5 @@ export const ZoomLayer: React.FC<{zoom: Broll['zoom']; children: React.ReactNode
 			break;
 	}
 
-	return <AbsoluteFill style={{transform, transformOrigin: 'center center'}}>{children}</AbsoluteFill>;
+	return <AbsoluteFill style={{transform, transformOrigin: origin}}>{children}</AbsoluteFill>;
 };

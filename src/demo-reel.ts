@@ -15,8 +15,8 @@ export const demoReel: ReelProps = {
 	autoZoomScale: 1.15,
 	zooms: [{atSeconds: 13.8, durationSeconds: 1.2, scale: 1.35}],
 	broll: [
-		{src: 'demo/terminal.mp4', atSeconds: 6.6, durationSeconds: 2.6, layout: 'split', transition: 'glitch', zoom: 'zoom-in', sourceStartSeconds: 0},
-		{src: 'demo/terminal.mp4', atSeconds: 9.6, durationSeconds: 3, layout: 'pip', transition: 'slide', zoom: 'pan-right', sourceStartSeconds: 0},
+		{src: 'demo/terminal.mp4', atSeconds: 6.6, durationSeconds: 2.6, layout: 'split', transition: 'glitch', zoom: 'zoom-in', sourceStartSeconds: 0, playbackRate: 1, focus: '50% 50%', scale: 1},
+		{src: 'demo/terminal.mp4', atSeconds: 9.6, durationSeconds: 3, layout: 'pip', transition: 'slide', zoom: 'pan-right', sourceStartSeconds: 0, playbackRate: 1, focus: '50% 50%', scale: 1},
 	],
 	texts: [{text: 'Tutorial rápido', atSeconds: 0.2, durationSeconds: 2, style: 'label'}],
 	autoLogos: true,

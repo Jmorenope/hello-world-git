@@ -44,6 +44,31 @@ const GlitchBars: React.FC<{amount: number; seed: number}> = ({amount, seed}) =>
 	);
 };
 
+/** Etiqueta "×8 ⏩" para los tramos acelerados. */
+const SpeedBadge: React.FC<{rate: number; visible: number}> = ({rate, visible}) => {
+	const {width} = useVideoConfig();
+	return (
+		<div
+			style={{
+				position: 'absolute',
+				right: width * 0.04,
+				bottom: width * 0.04,
+				fontFamily: brand.fonts.mono,
+				fontWeight: 800,
+				fontSize: width * 0.045,
+				color: brand.colors.dark,
+				background: brand.colors.primary,
+				borderRadius: width * 0.015,
+				padding: '0.15em 0.5em',
+				opacity: visible,
+				boxShadow: `0 0 ${width * 0.03}px ${brand.colors.primary}`,
+			}}
+		>
+			{`×${rate} ⏩`}
+		</div>
+	);
+};
+
 /** Pantalla / clip de herramienta con su transición de entrada y salida. */
 export const BRoll: React.FC<{item: Broll; index: number}> = ({item, index}) => {
 	const frame = useCurrentFrame();
@@ -92,20 +117,24 @@ export const BRoll: React.FC<{item: Broll; index: number}> = ({item, index}) => 
 		<OffthreadVideo
 			src={staticFile(item.src)}
 			trimBefore={Math.round(item.sourceStartSeconds * fps)}
+			playbackRate={item.playbackRate}
 			muted
-			style={{width: '100%', height: '100%', objectFit: 'cover'}}
+			style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: item.focus}}
 		/>
 	) : (
-		<Img src={staticFile(item.src)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+		<Img src={staticFile(item.src)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: item.focus}} />
 	);
 
 	return (
 		<AbsoluteFill style={{zIndex: item.layout === 'full' ? 3 : 1}}>
 			<div style={{...region, overflow: 'hidden', background: brand.colors.dark}}>
 				<div style={{position: 'absolute', inset: 0, transform, clipPath, opacity, filter: glitch ? `hue-rotate(${glitch * 90}deg) contrast(1.4)` : undefined}}>
-					<ZoomLayer zoom={item.zoom}>{media}</ZoomLayer>
+					<ZoomLayer zoom={item.zoom} origin={item.focus}>
+						<AbsoluteFill style={{transform: `scale(${item.scale})`, transformOrigin: item.focus}}>{media}</AbsoluteFill>
+					</ZoomLayer>
 				</div>
 				<GlitchBars amount={glitch} seed={index} />
+				{item.playbackRate > 1 ? <SpeedBadge rate={item.playbackRate} visible={v} /> : null}
 				{flash > 0 ? <AbsoluteFill style={{background: brand.colors.light, opacity: flash}} /> : null}
 				{/* línea neón que separa la pantalla de la cara en modo split */}
 				{item.layout === 'split' ? (
