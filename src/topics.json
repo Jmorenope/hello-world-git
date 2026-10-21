@@ -3,6 +3,7 @@
   "topics": [
     {"name": "uConsole", "aliases": ["uconsole", "clockwork uconsole"]},
     {"name": "OWASP Juice Shop", "icon": "owasp", "aliases": ["owasp juice shop", "owasp juiceshop", "juice shop", "juiceshop"]},
+    {"name": "ALFA Network", "aliases": ["alfa network", "alpha network"]},
     {"name": "Kali Linux", "icon": "kalilinux", "aliases": ["kali linux", "kali"]},
     {"name": "Parrot OS", "icon": "parrotsecurity", "aliases": ["parrot os", "parrot security", "parrot"]},
     {"name": "Linux", "icon": "linux", "aliases": ["linux"]},
