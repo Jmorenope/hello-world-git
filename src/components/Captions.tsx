@@ -17,15 +17,15 @@ const Page: React.FC<{page: TikTokPage; lift: number}> = ({page, lift}) => {
 			<div
 				style={{
 					fontFamily: brand.fonts.title,
-					fontSize: width * 0.085,
+					fontSize: width * brand.captions.size,
 					textTransform: 'uppercase',
 					textAlign: 'center',
 					maxWidth: '86%',
 					lineHeight: 1.1,
 					transform: `scale(${0.85 + 0.15 * pop})`,
-					WebkitTextStroke: `${width * 0.006}px ${brand.colors.dark}`,
+					WebkitTextStroke: `${width * brand.captions.size * 0.07}px ${brand.colors.dark}`,
 					paintOrder: 'stroke',
-					textShadow: `0 ${width * 0.006}px 0 ${brand.colors.dark}`,
+					textShadow: `0 ${width * brand.captions.size * 0.07}px 0 ${brand.colors.dark}`,
 					whiteSpace: 'pre-wrap',
 				}}
 			>

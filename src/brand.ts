@@ -30,6 +30,10 @@ export const brand = {
 		title: `'${TITLE_FONT}', Impact, sans-serif`, // subtítulos y titulares
 		mono: `'${MONO_FONT}', 'Courier New', monospace`, // etiquetas estilo terminal
 	},
+	captions: {
+		// Tamaño de los subtítulos respecto al ancho del video (0.068 = 6,8 %).
+		size: 0.068,
+	},
 	motion: {
 		// Frames que dura cada transición (30 fps → 10 frames = 0,33 s).
 		transitionFrames: 10,
